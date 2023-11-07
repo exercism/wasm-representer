@@ -1,6 +1,5 @@
-
 (module
-  (func (;0;) (param $year i32) (result i32)
+  (func (param $year i32) (result i32)
     local.get $year
     i32.const 4
     i32.rem_s
@@ -17,4 +16,4 @@
     i32.or
     i32.and)
   (export "isLeap" (func 0))
-  (type (;0;) (func (param i32) (result i32))))
+  (type (func (param i32) (result i32))))

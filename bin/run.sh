@@ -33,12 +33,18 @@ mkdir -p "${output_dir}"
 
 echo "${slug}: creating representation..."
 
-# Create the representation for the solution
-# TODO: replace the below commands with your own commands 
-# to create the representation.txt, representation.json and
-# mapping.json files
+pushd "${input_dir}" > /dev/null
+
+exclude_files=$(jq -r '(.files.invalidator // []) + (.files.editor // []) + (.files.example // []) + (.files.exemplar // []) | .[]' .meta/config.json)
 echo '' > "${representation_txt_file}"
+
+for file in $(find . -name '*.wat' $(echo "${exclude_files}" | awk '{ print "! -path ./" $0 }' | tr '\n' ' ') | sort); do
+    wat-desugar "${file}" >> "${representation_txt_file}"
+done
+
 echo '{"version": 1}' > "${representation_json_file}"
 echo '{}' > "${mapping_file}"
+
+popd > /dev/null
 
 echo "${slug}: done"
