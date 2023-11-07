@@ -1,7 +1,8 @@
 FROM alpine:3.18.3
 
-# TODO: install packages required to run the representer
-RUN apk add --no-cache bash jq
+RUN apk update && \
+  apk add --no-cache bash jq && \
+  apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing wabt
 
 WORKDIR /opt/representer
 COPY . .

@@ -1,3 +1,4 @@
+.appends/
 .git/
 .github/
 bin/run-in-docker.sh
