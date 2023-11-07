@@ -38,7 +38,7 @@ pushd "${input_dir}" > /dev/null
 exclude_files=$(jq -r '(.files.invalidator // []) + (.files.editor // []) + (.files.example // []) + (.files.exemplar // []) | .[]' .meta/config.json)
 echo '' > "${representation_txt_file}"
 
-for file in $(find . -name '*.wat' $(echo "${exclude_files}" | awk '{ print "! -path ./" $0 }' | tr '\n' ' ')); do
+for file in $(find . -name '*.wat' $(echo "${exclude_files}" | awk '{ print "! -path ./" $0 }' | tr '\n' ' ') | sort); do
     wat-desugar "${file}" >> "${representation_txt_file}"
 done
 
